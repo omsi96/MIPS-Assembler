@@ -30,7 +30,7 @@ func decompose(str: String) throws
         {
             let splitLine = line.split(separator: " ")
             let opcode = String(splitLine[0])
-            guard let instxType = instructionType.validate(opcode: opcode) else {
+            guard let instxType = instructionType(opcode: opcode) else {
                 fatalError("I want to always now be able to parse it")
             }
             
@@ -39,9 +39,9 @@ func decompose(str: String) throws
                 let plainSplitLine = String(splitLine[0]).trimmingCharacters(in: .whitespacesAndNewlines)
                 let registersArray = plainSplitLine.split(separator: ",")
                 let registersArrayInt = registersArray.map{Int(($0.split(separator: "r"))[0])!}
-                let rs: Register = .rs(registersArrayInt[0])
+                let rd: Register = .rd(registersArrayInt[0])
                 let rt: Register = .rt(registersArrayInt[1])
-                let rd: Register = .rd(registersArrayInt[2])
+                let rs: Register = .rs(registersArrayInt[2])
                 
             default:
                 fatalError("I didn't finish this code yet for i type and j type")
@@ -70,7 +70,7 @@ enum instructionType
     case j
     case nop
     
-    init(opcode: INSTX)
+    private init(opcode: INSTX)
     {
         switch opcode
         {
@@ -81,10 +81,10 @@ enum instructionType
         }
     }
     
-    static func validate(opcode: String) -> instructionType?
+    init?(opcode: String)
     {
         guard let opcode = instructionType.INSTX.init(rawValue: opcode) else {return nil}
-        return instructionType(opcode: opcode)
+        self = instructionType(opcode: opcode)
     }
     
 }
@@ -106,6 +106,8 @@ enum InstructionBody
 {
     case Register
 }
+
+// This should determine instrution type, based on type, it should return me rs rt rd fun, or rs, rt, imm or only immediate
 struct Instruction
 {
     var opcode: instructionType.INSTX
