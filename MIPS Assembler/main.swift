@@ -1,24 +1,6 @@
-//
-//  main.swift
-//  MIPS Assembler
-//
-//  Created by OMAR ALIBRAHIM on 6/8/19.
-//  Copyright © 2019 OMAR ALIBRAHIM. All rights reserved.
+let i1 = Instruction.add(.r0, .r1, .r2)
+let i2 = Instruction.beq(.r0, .r4, 5)
+let i3 = Instruction.jump(5)
+let i4 = Instruction.ret
 
-import Foundation // TrimmingCharacters is found in Foundarion lel2saf
-let assemblyCode =  """
-                    add r0, r1, r2
-                    jump 30
-                    ret
-                    beq r4, r4, Label
-                    addi r0, r0, 45
-                    """
-
-
-let add: Instruction = .add(.r0, .r1, .r2)
-let sub: Instruction = .sub(.r0, .r1, .r2)
-print(add.binary.binaryRepresentable())
-print(sub.binary.binaryRepresentable())
-
-
-
+print(i4.binary.binaryRepresentable())

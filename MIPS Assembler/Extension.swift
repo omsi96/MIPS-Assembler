@@ -13,7 +13,7 @@ extension UInt32{
     public func binaryRepresentable(length: Int = 16) -> String{
         let binary = String(self, radix: 2)
         let paddingWidth = length - binary.count
-        guard 0 < paddingWidth else { return String(self) }
+        guard 0 < paddingWidth else { return binary }
         
         return String(repeating: "0", count: paddingWidth) + binary
     }
