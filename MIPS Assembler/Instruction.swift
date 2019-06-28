@@ -131,3 +131,87 @@ enum Instruction
     }
 }
 
+extension Instruction
+{
+    init?(opcodeString str: String, parameters: [Register]? = nil, immediate: Int? = nil)
+    {
+        switch str{
+        case "add":
+            guard let parameters = parameters, parameters.count == 3 else {return nil}
+            self = .add(parameters[0], parameters[1], parameters[2])
+        case "sub":
+            guard let parameters = parameters, parameters.count == 3 else {return nil}
+            self = .sub(parameters[0], parameters[1], parameters[2])
+        case "and":
+            guard let parameters = parameters, parameters.count == 3 else {return nil}
+            self = .and(parameters[0], parameters[1], parameters[2])
+        case "or":
+            guard let parameters = parameters, parameters.count == 3 else {return nil}
+            self = .or(parameters[0], parameters[1], parameters[2])
+        case "xor":
+            guard let parameters = parameters, parameters.count == 3 else {return nil}
+            self = .xor(parameters[0], parameters[1], parameters[2])
+        case "not":
+            guard let parameters = parameters, parameters.count == 1 else {return nil}
+            self = .not(parameters[0])
+        case "srl":
+            guard let parameters = parameters, parameters.count == 1 else {return nil}
+            self = .srl(parameters[0])
+        case "addi":
+            guard let parameters = parameters, parameters.count == 2 else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .addi(parameters[0], parameters[1], UInt32(immediate))
+        case "lw":
+            guard let parameters = parameters, parameters.count == 2 else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .lw(parameters[0], parameters[1], UInt32(immediate))
+        case "sw":
+            guard let parameters = parameters, parameters.count == 2 else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .sw(parameters[0], parameters[1],  UInt32(immediate))
+        case "beq":
+            guard let parameters = parameters, parameters.count == 2 else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .beq(parameters[0], parameters[1], UInt32(immediate))
+        case "jump":
+            guard parameters == nil else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .jump(UInt32(immediate))
+        case "jal":
+            guard parameters == nil else {return nil}
+            guard let immediate = immediate else {return nil}
+            self = .jal(UInt32(immediate))
+        case "ret":
+            guard parameters == nil else {return nil}
+            guard immediate == nil else {return nil}
+            self = .ret
+        case "nop":
+            guard parameters == nil else {return nil}
+            guard immediate == nil else {return nil}
+            self = .nop
+        default:
+            return nil
+        }
+    }
+    var opcodeString: String{
+        switch self {
+        case .add: return "add"
+        case .sub: return "sub"
+        case .and: return "and"
+        case .or: return "or"
+        case .xor: return "xor"
+        case .not: return "not"
+        case .srl: return "srl"
+        case .addi: return "addi"
+        case .lw: return "lw"
+        case .sw: return "sw"
+        case .beq: return "beq"
+        case .jump: return "jump"
+        case .jal: return "jal"
+        case .ret: return "ret"
+        case .nop: return "nop"
+        }
+    }
+    
+}
+
