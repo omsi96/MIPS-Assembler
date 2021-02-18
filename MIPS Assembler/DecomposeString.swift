@@ -29,15 +29,16 @@ func interpertation()
 
 func readingFile(fileName: String)
 {
-    guard let lines = readFile(fileName: fileName) else {return}
+    let instructions2 = instructions.trimmingCharacters(in: .whitespaces)
+    let lines = instructions2.components(separatedBy: .newlines)
     var allInstructions: [(String, Instruction)] = []
     for line  in lines {
         if let instx = generateInstruction(instructionLine: line)
         {
             allInstructions.append(instx)
         }
-    }
-    printInstruction(allInstructions: allInstructions)
+        }
+        printInstruction(allInstructions: allInstructions)
 }
 
 
@@ -57,7 +58,7 @@ func printInstruction(allInstructions: [(String, Instruction)])
 {
     print("your code can be converted as follows:- ")
     //    print(allInstructions.map{$0.binary.binaryRepresentable()}.description)
-    print("Instruction \t\tBinary")
+    print("Binary \t\t\t\t\tInstruction")
     allInstructions.forEach { (instructionTuple) in
         print(instructionTuple.1.binary.binaryRepresentable() + "\t\t" + instructionTuple.0)
     }
@@ -65,23 +66,7 @@ func printInstruction(allInstructions: [(String, Instruction)])
 }
 
 
-fileprivate func readFile(fileName: String) -> [String]?
-{
-    guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") // file path for file "data.txt"
-        else {
-            print("No such file with \(fileName) name")
-            return nil
-    }
-    do{
-        let str = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
-        return str.components(separatedBy: .newlines)
-    }
-    catch
-    {
-        print("File couldn't be opened")
-        return nil
-    }
-}
+
 
 
 enum InstructionsStructure{
