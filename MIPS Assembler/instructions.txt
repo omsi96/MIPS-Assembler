@@ -1,0 +1,13 @@
+add $1, $2, $3
+sub $2, $3, $4
+addi $2, $5, 500
+beq $0, $0, 200
+lw $0, $2, 100
+jal 200
+addi $4, $4, 2
+ret
+addi $4, $5, 0
+nop
+nop
+nop
+addi $4, $5, 0

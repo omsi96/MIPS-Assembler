@@ -9,8 +9,7 @@
 import Foundation
 
 
-enum Instruction
-{
+enum Instruction{
     case add(Register, Register, Register)
     case sub(Register, Register, Register)
     case and(Register, Register, Register)
@@ -31,43 +30,33 @@ enum Instruction
         switch self {
         case .add, .sub, .and, .or, .xor, .not, .srl: return 0b001
         case .addi: return 0b0010
-        case .lw: return 0b0011
-        case .sw: return 0b0100
-        case .beq: return 0b0101
+        case .lw:   return 0b0011
+        case .sw:   return 0b0100
+        case .beq:  return 0b0101
         case .jump: return 0b110
-        case .jal: return 0b0111
-        case .ret: return 0b1000
-        case .nop: return 0
+        case .jal:  return 0b0111
+        case .ret:  return 0b1000
+        case .nop:  return 0
         }
     }
     
     var rtypeFunction: UInt32{
         switch self{
         case .add: return 0b110
-            
         case .sub: return 0b111
-            
         case .and: return 0b000
-            
         case  .or: return 0b001
-            
         case .xor: return 0b010
-            
         case .not: return 0b011
-            
         case .srl: return 0b100
-            
         default: fatalError("You should not use this in other types!")
         }
     }
     
-    var binary: UInt32
-    {
-        func generateOpcode(slices: [(value: UInt32, offset: Int)]) -> UInt32
-        {
+    var binary: UInt32{
+        func generateOpcode(slices: [(value: UInt32, offset: Int)]) -> UInt32{
             var binaryInstruction: UInt32 = 0
-            for slice in slices
-            {
+            for slice in slices{
                 binaryInstruction <<= slice.offset
                 binaryInstruction |= slice.value
             }
@@ -75,8 +64,7 @@ enum Instruction
             return binaryInstruction
         }
         
-        func rtype(rd: Register, rt: Register, rs: Register) -> UInt32
-        {
+        func rtype(rd: Register, rt: Register, rs: Register) -> UInt32{
             return generateOpcode(slices: [
                 (self.opcode,   5),
                 (rs.rawValue,   3),
@@ -86,8 +74,7 @@ enum Instruction
                 ])
         }
         
-        func itype(rt: Register, rs: Register, immediate: UInt32) -> UInt32
-        {
+        func itype(rt: Register, rs: Register, immediate: UInt32) -> UInt32{
             return generateOpcode(slices: [
                 (self.opcode,   5),
                 (rs.rawValue,   3),
@@ -100,7 +87,7 @@ enum Instruction
         case let .add(rd, rs, rt),
              let .sub(rd, rs, rt),
              let .and(rd, rs, rt),
-             let .or(rd, rs, rt),
+             let .or (rd, rs, rt),
              let .xor(rd, rs, rt):
             return rtype(rd: rd, rt: rt, rs: rs)
             
@@ -133,8 +120,11 @@ enum Instruction
 
 extension Instruction
 {
-    init?(opcodeString str: String, parameters: [Register]? = nil, immediate: Int? = nil)
-    {
+    init?(opcodeString str: String, parameters: [Register]? = nil, immediate: Int? = nil){
+//        var valid3Paremeters: Bool{
+//            guard let parameters = parameters, parameters.count == 3 else {return false}
+//            return true
+//        }
         switch str{
         case "add":
             guard let parameters = parameters, parameters.count == 3 else {return nil}
@@ -194,24 +184,23 @@ extension Instruction
         }
     }
     var opcodeString: String{
-        switch self {
-        case .add: return "add"
-        case .sub: return "sub"
-        case .and: return "and"
-        case .or: return "or"
-        case .xor: return "xor"
-        case .not: return "not"
-        case .srl: return "srl"
+        switch self{
+        case .add:  return "add"
+        case .sub:  return "sub"
+        case .and:  return "and"
+        case .or:   return "or"
+        case .xor:  return "xor"
+        case .not:  return "not"
+        case .srl:  return "srl"
         case .addi: return "addi"
-        case .lw: return "lw"
-        case .sw: return "sw"
-        case .beq: return "beq"
+        case .lw:   return "lw"
+        case .sw:   return "sw"
+        case .beq:  return "beq"
         case .jump: return "jump"
-        case .jal: return "jal"
-        case .ret: return "ret"
-        case .nop: return "nop"
+        case .jal:  return "jal"
+        case .ret:  return "ret"
+        case .nop:  return "nop"
         }
     }
-    
 }
 

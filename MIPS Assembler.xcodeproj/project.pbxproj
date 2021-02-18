@@ -11,6 +11,7 @@
 		D29D313722B40E5B00315251 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D313622B40E5B00315251 /* Register.swift */; };
 		D29D313922B40E8D00315251 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D313822B40E8D00315251 /* Extension.swift */; };
 		D29D313B22B40ED600315251 /* DecomposeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D313A22B40ED600315251 /* DecomposeString.swift */; };
+		D2EC7FCD25DA137F0027CCDF /* instructions.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = D294CEAC22C6D53000F7DBA5 /* instructions.txt */; };
 		D2F94EDD22ABF347006131E6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F94EDC22ABF347006131E6 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -21,12 +22,14 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
+				D2EC7FCD25DA137F0027CCDF /* instructions.txt in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D294CEAC22C6D53000F7DBA5 /* instructions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = instructions.txt; sourceTree = "<group>"; };
 		D29D313422B40E2F00315251 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		D29D313622B40E5B00315251 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		D29D313822B40E8D00315251 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -70,6 +73,7 @@
 				D29D313622B40E5B00315251 /* Register.swift */,
 				D29D313822B40E8D00315251 /* Extension.swift */,
 				D29D313A22B40ED600315251 /* DecomposeString.swift */,
+				D294CEAC22C6D53000F7DBA5 /* instructions.txt */,
 			);
 			path = "MIPS Assembler";
 			sourceTree = "<group>";

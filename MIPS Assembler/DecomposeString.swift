@@ -4,14 +4,100 @@
 ////
 ////  Created by OMAR ALIBRAHIM on 6/14/19.
 ////  Copyright © 2019 OMAR ALIBRAHIM. All rights reserved.
-//
+
 import Foundation
+
+// Main Function
+func interpertation()
+{
+    var allInstructions: [(String, Instruction)] = []
+    for i in 1...
+    {
+        print("\(i)> ", terminator: "")
+        guard let instructionStr = readLine(), instructionStr != "-1" else {
+            break
+        } // user didn't input ctr+d
+        
+        if let instx = generateInstruction(instructionLine: instructionStr)
+        {
+            allInstructions.append(instx)
+        }
+    }
+    printInstruction(allInstructions: allInstructions)
+}
+
+
+func readingFile(fileName: String)
+{
+    guard let lines = readFile(fileName: fileName) else {return}
+    var allInstructions: [(String, Instruction)] = []
+    for line  in lines {
+        if let instx = generateInstruction(instructionLine: line)
+        {
+            allInstructions.append(instx)
+        }
+    }
+    printInstruction(allInstructions: allInstructions)
+}
+
+
+
+func generateInstruction(instructionLine: String) -> (String, Instruction)?
+{
+    let instructionStructure = splitInstruction(instructionLine)
+    guard let instruction = Instruction(opcodeString: instructionStructure.opcode, parameters: instructionStructure.registers, immediate: instructionStructure.immediate) else
+    {
+        print("Wrong input!")
+        return nil
+    }
+    return (instructionLine, instruction)
+}
+
+func printInstruction(allInstructions: [(String, Instruction)])
+{
+    print("your code can be converted as follows:- ")
+    //    print(allInstructions.map{$0.binary.binaryRepresentable()}.description)
+    print("Instruction \t\tBinary")
+    allInstructions.forEach { (instructionTuple) in
+        print(instructionTuple.1.binary.binaryRepresentable() + "\t\t" + instructionTuple.0)
+    }
+    print("Program has ended")
+}
+
+
+fileprivate func readFile(fileName: String) -> [String]?
+{
+    guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") // file path for file "data.txt"
+        else {
+            print("No such file with \(fileName) name")
+            return nil
+    }
+    do{
+        let str = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
+        return str.components(separatedBy: .newlines)
+    }
+    catch
+    {
+        print("File couldn't be opened")
+        return nil
+    }
+}
+
+
+enum InstructionsStructure{
+    case rtype3(Register, Register, Register)
+    case rtype1(Register)
+    case itype(Register, Register, UInt32)
+    case jtype(UInt32)
+    case op
+}
 
 
 
 // How can I properly make this into a class
 func splitInstruction(_ instructionStr: String) -> (opcode: String, registers: [Register]?, immediate: Int?)
 {
+    
     guard instructionStr.contains(" ") else
     {
         return (instructionStr, nil, nil)
@@ -29,7 +115,7 @@ func splitInstruction(_ instructionStr: String) -> (opcode: String, registers: [
     var immediateValue: Int?
     var immediateIndex: Substring.Index?
     
-    if var immediate = (parameters.split(separator: ",").last), !immediate.contains("$")
+    if var immediate = (parameters.split(separator: ",").last), !immediate.contains("$") || !immediate.contains("r")
     {
         immediate.removeAll{$0 == " "}
         immediateValue = Int(immediate)
@@ -67,32 +153,32 @@ func splitInstruction(_ instructionStr: String) -> (opcode: String, registers: [
     return (opcode, regs,immediateValue)
 }
 
-//
-// Main Function
-func interpertation()
-{
-    var allInstructions: [Instruction] = []
-    for i in 1...
-    {
-        print("\(i)> ", terminator: "")
-        guard let instructionStr = readLine(), instructionStr != "-1" else {
-            break
-        } // user didn't input ctr+d
-        
-        let instructionStructure = splitInstruction(instructionStr)
-        guard let instruction = Instruction(opcodeString: instructionStructure.opcode, parameters: instructionStructure.registers, immediate: instructionStructure.immediate) else
-        {
-            print("Wrong input!")
-            continue
-        }
-        allInstructions.append(instruction)
-    }
-    print("your code can be converted as follows:- ")
-    print(allInstructions.map{$0.binary.binaryRepresentable()}.description)
-    
-    print("Program has ended")
+struct InstructionStructure{
+    var opcode: String
+    var registers: [Register]?
+    var immediate: UInt32?
 }
 
+
+//func splitInstruction2(_ instructionStr: String) -> (opcode: String, registers: [Register]?, immediate: Int?)?
+//{
+//    let parts = instructionStr.split(usingRegex: "(\\w|,)+")
+//    
+//    
+//    guard parts.count > 0 else
+//    {
+//        return nil
+//    }
+//    if parts.count == 1
+//    {
+//        return InstructionStructure(opcode: parts[0], registers: nil, immediate: nil)
+//    }
+//    if parts.count == 2
+//    {
+//        InstructionStructure(opcode: parts[0], registers:, immediate: <#T##UInt32?#>)
+//    }
+//    
+//}
 
 
 //func parse(str: String)
