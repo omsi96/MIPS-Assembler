@@ -95,10 +95,10 @@ enum Instruction{
              let .srl(rs):
             return rtype(rd: .r0, rt: .r0, rs: rs)
             
-        case let .addi  (rs, rt, immediate),
-             let .sw    (rs, rt, immediate),
-             let .lw    (rs, rt, immediate),
-             let .beq   (rs, rt, immediate):
+        case let .addi  (rt, rs, immediate),
+             let .sw    (rt, rs, immediate),
+             let .lw    (rt, rs, immediate),
+             let .beq   (rt, rs, immediate):
             return itype(rt: rt, rs: rs, immediate: immediate)
             
         case let .jump(immediate),
